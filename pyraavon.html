@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PYRAVON | Portfolio</title>
+
+<script>
+  // Force browser to stop restoring old scroll position on refresh
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+</script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #02040a;
+    color: white;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Fixed Animated Background Canvas */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Header */
+header {
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    color: #ff7b00;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #ff7b00;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.brand-title-container {
+    margin-bottom: 10px;
+}
+
+.brand-main-title {
+    font-size: 95px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 12px;
+    line-height: 1;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #ffffff 30%, #ff7b00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(255, 123, 0, 0.4));
+}
+
+.hero h2 {
+    margin-top: 15px;
+    font-size: 30px;
+    color: #cccccc;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.hero-subtitle {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff7b00;
+    margin-top: 15px;
+    letter-spacing: 1px;
+}
+
+.hero p {
+    max-width: 800px;
+    margin-top: 20px;
+    color: #aaaaaa;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 15px 40px;
+    background: #ff7b00;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px #ff7b00;
+}
+
+/* Sections General */
+section {
+    padding: 80px 10%;
+}
+
+.section-title {
+    text-align: center;
+    color: #ff7b00;
+    font-size: 36px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.about {
+    text-align: center;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: auto;
+    font-size: 17px;
+}
+
+/* Skills Grid */
+.skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.skill-card {
+    background: rgba(22, 22, 22, 0.8);
+    backdrop-filter: blur(5px);
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #222;
+    transition: .3s;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff7b00;
+}
+
+.skill-card h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+/* Progress Bars */
+.skill-bar {
+    background: #222;
+    border-radius: 20px;
+    height: 8px;
+    margin-top: 15px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.skill-fill {
+    background: #ff7b00;
+    height: 100%;
+    border-radius: 20px;
+}
+
+/* Projects Grid */
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.project {
+    background: rgba(22, 22, 22, 0.8);
+    backdrop-filter: blur(5px);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #222;
+    transition: .3s;
+}
+
+.project:hover {
+    transform: translateY(-5px);
+    border-color: #ff7b00;
+}
+
+.project h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #ff7b00;
+}
+
+/* Goals */
+.goals {
+    text-align: center;
+    line-height: 2.5;
+    font-size: 19px;
+}
+
+.contact-links {
+    margin-bottom: 25px;
+}
+
+.contact-links p {
+    margin: 12px 0;
+    font-size: 18px;
+}
+
+/* Footer */
+footer {
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+.orange {
+    color: #ff7b00;
+}
+
+/* Mobile Responsive Fixes */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 15px 5%;
+        text-align: center;
+        gap: 10px;
+    }
+
+    header nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero h1, h1, [class*="logo"], [class*="title"] { 
+        font-size: 2.5rem !important;
+        word-wrap: break-word;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Canvas -->
+<canvas id="bg-canvas"></canvas>
+
+<header>
+    <div class="logo">PYRAVON</div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#goals">Goals</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="brand-title-container">
+        <h1 class="brand-main-title">Pyravon</h1>
+    </div>
+
+    <h2>Pranjol Protim Gogoi</h2>
+    <div class="hero-subtitle">Programmer • Web Developer • Video Editor</div>
+    
+    <p>
+        Passionate about programming, technology, website development,
+        creative projects, and continuous learning.
+    </p>
+    <a href="#about" class="btn">Explore Portfolio</a>
+</section>
+
+<section id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="about">
+        <p>
+            Hello! I am <span class="orange">Pranjol Protim Gogoi</span>,
+            also known as PYRAVON. I enjoy programming, building websites,
+            learning new technologies, and creating digital content.
+            My goal is to keep improving my skills and build exciting
+            projects in the future.
+        </p>
+    </div>
+</section>
+
+<section id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills">
+        <div class="skill-card">
+            <h3>HTML</h3>
+            <p>Responsive website development.</p>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width:90%"></div>
+            </div>
+        </div>
+
+        <div class="skill-card">
+            <h3>C Programming</h3>
+            <p>Programming fundamentals and logic.</p>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width:75%"></div>
+            </div>
+        </div>
+
+        <div class="skill-card">
+            <h3>C++</h3>
+            <p>Object-oriented programming concepts.</p>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width:70%"></div>
+            </div>
+        </div>
+
+        <div class="skill-card">
+            <h3>Video Editing</h3>
+            <p>Creative editing and content production.</p>
+            <div class="skill-bar">
+                <div class="skill-fill" style="width:85%"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects">
+        <div class="project">
+            <h3>PYRAVON Brand</h3>
+            <p>Personal branding and logo creation.</p>
+        </div>
+        <div class="project">
+            <h3>Portfolio Website</h3>
+            <p>Professional online portfolio project.</p>
+        </div>
+        <div class="project">
+            <h3>Future Development Projects</h3>
+            <p>More coding and creative projects coming soon.</p>
+        </div>
+    </div>
+</section>
+
+<section id="goals">
+    <h2 class="section-title">Goals</h2>
+    <div class="goals">
+        <p>🚀 Become a Professional Developer</p>
+        <p>🌐 Build Modern Websites</p>
+        <p>💻 Learn Advanced Programming</p>
+        <p>🎬 Improve Video Editing Skills</p>
+        <p>🔥 Grow the PYRAVON Brand</p>
+    </div>
+</section>
+
+<section id="contact">
+    <h2 class="section-title">Contact</h2>
+    <div class="about">
+        <div class="contact-links">
+            <p><strong>Email:</strong> officalpyraavon@gmail.com</p>
+            <p><strong>YouTube:</strong> PYRAVON</p>
+            <p><strong>Instagram:</strong> @pyravon</p>
+        </div>
+        <a href="mailto:officalpyraavon@gmail.com" class="btn">Contact Me</a>
+    </div>
+</section>
+
+<footer>
+    <h3>PYRAVON</h3>
+    <p>Programmer • Web Developer • Video Editor</p>
+    <br>
+    <p>© 2026 PYRAVON | Built by Pranjol Protim Gogoi</p>
+</footer>
+
+<script>
+  // Ensure window always forces top position on load
+  window.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
+  });
+  window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+  });
+
+  // Background Particle Animation Script
+  (function () {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height, points = [];
+    const palettes = ['#8b5cf6', '#06b6d4', '#ec4899', '#3b82f6'];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initPoints();
+    }
+
+    class Point {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 0.8 + 0.3;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        
+        this.radius = Math.random() * 2 + 1.2;
+        this.color = palettes[Math.floor(Math.random() * palettes.length)];
+      }
+
+      update() {
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        this.x += this.vx;
+        this.y += this.vy;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function initPoints() {
+      points = [];
+      const count = Math.floor((width * height) / 4500);
+      for (let i = 0; i < count; i++) {
+        points.push(new Point());
+      }
+    }
+
+    function drawLines() {
+      const maxDist = 175;
+
+      for (let a = 0; a < points.length; a++) {
+        for (let b = a + 1; b < points.length; b++) {
+          const dx = points[a].x - points[b].x;
+          const dy = points[a].y - points[b].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDist) {
+            const opacity = (1 - dist / maxDist) * 0.6;
+
+            const gradient = ctx.createLinearGradient(
+              points[a].x, points[a].y,
+              points[b].x, points[b].y
+            );
+            gradient.addColorStop(0, points[a].color);
+            gradient.addColorStop(1, points[b].color);
+
+            ctx.strokeStyle = gradient;
+            ctx.globalAlpha = opacity;
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.moveTo(points[a].x, points[a].y);
+            ctx.lineTo(points[b].x, points[b].y);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      drawLines();
+
+      points.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    animate();
+  })();
+</script>
+
+</body>
+</html>
